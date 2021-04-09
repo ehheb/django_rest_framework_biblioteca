@@ -20,6 +20,6 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('autores/', include('autores.urls')),
     path('editoriales/', include('editoriales.urls')),
-    #path('libros/', include('libros.urls')),
+    path('libros/', include('libros.urls')),
 
 ]

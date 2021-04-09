@@ -9,7 +9,8 @@ class Libro(models.Model):
     editorial = models.ForeignKey(
         Editorial,
         related_name='libros',
-        on_delete=True
+        on_delete=models.SET_NULL,
+        null=True
     )
     autores = models.ManyToManyField(Autor, related_name='libros')
 
