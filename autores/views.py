@@ -57,6 +57,25 @@ class DetalleAutor(APIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+    def patch(self, request, id):
+        try:
+            autor = Autor.objects.get(id=id)
+        except Autor.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        serialized = AutorSerializer(
+            autor,
+            data=request.data,
+            partial=True
+        )
+
+        if serialized.is_valid():
+            serialized.save()
+            return Response(
+                status=status.HTTP_200_OK,
+                data=serialized.data
+            )
+
     def delete(self, request, id):
         try:
             autor = Autor.objects.get(id=id)

@@ -3,10 +3,9 @@ from rest_framework import status
 from rest_framework.views import Response, APIView
 from libros.models import Libro
 from libros.serializers import LibroSerializer
-from autores.serializers import AutorSerializer
 
 class VistaLibro(APIView):
-    autor = AutorSerializer(many=True)
+
     def get(self, request):
         libros = Libro.objects.all()
         serialized = LibroSerializer(libros, many=True)
@@ -59,6 +58,25 @@ class DetalleLibro(APIView):
             )
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, id):
+        try:
+            libro = Libro.objects.get(id=id)
+        except Libro.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        serialized = LibroSerializer(
+            libro,
+            data=request.data,
+            partial=True
+        )
+
+        if serialized.is_valid():
+            serialized.save()
+            return Response(
+                status=status.HTTP_200_OK,
+                data=serialized.data
+            )
 
     def delete(self, request, id):
         try:
