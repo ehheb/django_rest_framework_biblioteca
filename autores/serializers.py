@@ -5,4 +5,4 @@ class AutorSerializer(ModelSerializer):
 
     class Meta:
         model = Autor
-        fields = ('id', 'nombre', 'apellido', 'edad', 'telefono', 'libros')
+        fields = ('nombre', 'apellido', 'edad', 'telefono')

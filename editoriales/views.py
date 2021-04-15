@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import Response, APIView
 from editoriales.models import Editorial
 from editoriales.serializers import EditorialSerializer
 
-class VistaEditorial(APIView):
+"""class VistaEditorial(APIView):
     def get(self, request):
         editoriales = Editorial.objects.all()
         serialized = EditorialSerializer(editoriales, many=True)
@@ -70,3 +70,13 @@ class DetalleEditorial(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        """
+
+class EditorialGenericViews(generics.ListAPIView):
+    queryset = Editorial.objects.all()
+    serializer_class = EditorialSerializer
+
+
+class EditorialDetailGenericViews(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Editorial.objects.all()
+    serializer_class = Editorial

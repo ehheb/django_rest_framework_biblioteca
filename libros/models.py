@@ -6,6 +6,7 @@ class Libro(models.Model):
     nombre = models.CharField(max_length=500)
     fecha_publicacion = models.DateField()
     paginas = models.IntegerField()
+    #Una editorial puede tener muchos libros pero un libro tiene solamente una editorial
     editorial = models.ForeignKey(
         Editorial,
         related_name='libros',

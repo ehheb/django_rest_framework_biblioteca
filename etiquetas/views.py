@@ -1,51 +1,54 @@
 from django.shortcuts import render
-
 from rest_framework import status, generics
 from rest_framework.views import Response, APIView
-from autores.models import Autor
-from autores.serializers import AutorSerializer
+from etiquetas.models import Etiqueta
+from etiquetas.serializers import EtiquetaSerializer
 
-"""class VistaAutor(APIView):
+class VistaEtiqueta(APIView):
+
     def get(self, request):
-        autores = Autor.objects.all()
-        serialized = AutorSerializer(autores, many=True)
+        etiquetas = Etiqueta.objects.all()
+        serialized = EtiquetaSerializer(etiquetas, many=True)
+
         return Response(
             status=status.HTTP_200_OK,
             data=serialized.data
         )
+
     def post(self, request):
-        serialized = AutorSerializer(data=request.data)
+        serialized = EtiquetaSerializer(data=request.data)
+
         if serialized.is_valid():
             serialized.save()
+            print(serialized)
             return Response(
                 status=status.HTTP_200_OK,
                 data=serialized.data
             )
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
 
-class DetalleAutor(APIView):
+class DetalleEtiqueta(APIView):
     def get(self, request, id):
         try:
-            autor = Autor.objects.get(id=id)
+            etiqueta = Etiqueta.objects.get(id=id)
 
-        except Autor.DoesNotExist:
+        except Etiqueta.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        serialized = AutorSerializer(autor)
+        serialized = EtiquetaSerializer(etiqueta)
         return Response(
             status=status.HTTP_200_OK,
             data=serialized.data
         )
+
 
     def put(self, request, id):
         try:
-            autor = Autor.objects.get(id=id)
+            etiqueta = Etiqueta.objects.get(id=id)
 
-        except Autor.DoesNotExist:
+        except Etiqueta.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        serialized = AutorSerializer(autor, data=request.data)
+        serialized = EtiquetaSerializer(etiqueta, data=request.data)
 
         if serialized.is_valid():
             serialized.save()
@@ -53,18 +56,17 @@ class DetalleAutor(APIView):
                 status=status.HTTP_200_OK,
                 data=serialized.data
             )
-
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, id):
         try:
-            autor = Autor.objects.get(id=id)
-        except Autor.DoesNotExist:
+            etiqueta = Etiqueta.objects.get(id=id)
+        except Etiqueta.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        serialized = AutorSerializer(
-            autor,
+        serialized = EtiquetaSerializer(
+            etiqueta,
             data=request.data,
             partial=True
         )
@@ -78,27 +80,29 @@ class DetalleAutor(APIView):
 
     def delete(self, request, id):
         try:
-            autor = Autor.objects.get(id=id)
-        except Autor.DoesNotExist:
+            etiqueta = Etiqueta.objects.get(id=id)
+
+        except Etiqueta.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        eliminar = autor.delete()
+        eliminar = etiqueta.delete()
 
         if eliminar:
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-"""
 
-class AutorGenericViews(generics.ListAPIView):
-    queryset = Autor.objects.all()
-    serializer_class = AutorSerializer
+class EtiquetaGenericViews(generics.ListAPIView):
+    queryset = Etiqueta.objects.all()
+    serializer_class = EtiquetaSerializer
 
-class AutorDetailGenericViews(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Autor.objects.all()
-    serializer_class = AutorSerializer
-
-
+    #sobreescritura de los métodos
+    #def get(self, request, *args, **kwargs):
+    #    print(request.method)
+    #    return super().get(request, *args, **kwargs)
 
 
+class EtiquetaDetailGenericViews(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Etiqueta.objects.all()
+    serializer_class = EtiquetaSerializer
