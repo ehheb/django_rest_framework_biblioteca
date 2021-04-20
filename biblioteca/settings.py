@@ -135,3 +135,11 @@ REST_FRAMEWORK = {
     ]
 
 }
+
+"""EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_PORT = 'localhost'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''"""
+

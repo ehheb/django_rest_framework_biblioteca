@@ -22,6 +22,7 @@ urlpatterns = [
     path('autores/', include('autores.urls')),
     path('editoriales/', include('editoriales.urls')),
     path('libros/', include('libros.urls')),
+    path('users/', include('users.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 

@@ -121,6 +121,28 @@ class LibroViewSet(ModelViewSet):
     serializer_class = LibroSerializer
     permission_classes = (AllowAny,)
 
+
+    def get_queryset(self):
+        data = {}
+        #Libro._meta.get_fields()
+        for key, value in self.request.query_params.items():
+            if key in ['editorial', 'autores']:
+                data[key + '__in'] = value
+                continue
+            data[key + '__icontains'] = value
+        print(data)
+        return self.queryset.filter(**data)
+
+
+        #nombre = self.request.query_params.get('nombre')
+        #if nombre:
+        #    filtro = self.queryset.filter(nombre__icontains=nombre)
+        #    return filtro
+
+
+
+
+
     #Método para expandir toda la información si tiene tablas relacionadas
     #def get_serializer_class(self):
     #    if self.request.query_params.get('expand'):
@@ -161,7 +183,7 @@ class LibroViewSet(ModelViewSet):
                 libro.autores.remove(autor)
             return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(methods=['GET'], detail=False)
+"""    @action(methods=['GET'], detail=False)
     def ordenar(self, request):
         queryset = self.get_queryset().order_by('-nombre')
         serializer = LibroSerializer(queryset, many=True)
@@ -169,7 +191,7 @@ class LibroViewSet(ModelViewSet):
             status=status.HTTP_200_OK,
             data=serializer.data
         )
-
+"""
 
 
 

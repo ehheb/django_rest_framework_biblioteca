@@ -1,7 +1,10 @@
 from django.shortcuts import render
 
 from rest_framework import status, generics
+from rest_framework.permissions import AllowAny
 from rest_framework.views import Response, APIView
+from rest_framework.viewsets import ModelViewSet
+
 from autores.models import Autor
 from autores.serializers import AutorSerializer
 
@@ -91,13 +94,27 @@ class DetalleAutor(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 """
 
-class AutorGenericViews(generics.ListAPIView):
+"""class AutorGenericViews(generics.ListAPIView):
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
 
 class AutorDetailGenericViews(generics.RetrieveUpdateDestroyAPIView):
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
+"""
+
+class AutorViewSet(ModelViewSet):
+    queryset = Autor.objects.all()
+    serializer_class = AutorSerializer
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        data = {}
+        for key, value in self.request.query_params.items():
+            data[key + '__icontains'] = value
+
+        return self.queryset.filter(**data)
+
 
 
 

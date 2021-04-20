@@ -1,8 +1,15 @@
 from django.shortcuts import render
 from rest_framework import status, generics
+from rest_framework.permissions import AllowAny
 from rest_framework.views import Response, APIView
+from rest_framework.viewsets import ModelViewSet
+
 from editoriales.models import Editorial
 from editoriales.serializers import EditorialSerializer
+
+#ApiView
+#generics
+#modelviewset
 
 """class VistaEditorial(APIView):
     def get(self, request):
@@ -72,11 +79,23 @@ class DetalleEditorial(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         """
 
-class EditorialGenericViews(generics.ListAPIView):
+"""class EditorialGenericViews(generics.ListAPIView):
     queryset = Editorial.objects.all()
     serializer_class = EditorialSerializer
 
 
 class EditorialDetailGenericViews(generics.RetrieveUpdateDestroyAPIView):
     queryset = Editorial.objects.all()
-    serializer_class = Editorial
+    serializer_class = Editorial"""
+
+class EditorialViewSet(ModelViewSet):
+    queryset = Editorial.objects.all()
+    serializer_class = EditorialSerializer
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        data = {}
+        for key, value in self.request.query_params.items():
+            data[key + '__icontains'] = value
+        return self.queryset.filter(**data)
+
