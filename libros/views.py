@@ -1,119 +1,13 @@
 from django.shortcuts import render
-from rest_framework import status, generics
+from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.views import Response, APIView
+from rest_framework.permissions import AllowAny
+from rest_framework.views import Response
 from rest_framework.viewsets import ModelViewSet
-
 from autores.models import Autor
 from autores.serializers import AutorSerializer
-from editoriales.serializers import EditorialSerializer
 from libros.models import Libro
-from libros.serializers import LibroSerializer, NuevoLibroSerializer
-
-"""class VistaLibro(APIView):
-
-    def get(self, request):
-        libros = Libro.objects.all()
-        serialized = LibroSerializer(libros, many=True)
-
-        return Response(
-            status=status.HTTP_200_OK,
-            data=serialized.data
-        )
-
-    def post(self, request):
-        serialized = LibroSerializer(data=request.data)
-
-        if serialized.is_valid():
-            serialized.save()
-            print(serialized)
-            return Response(
-                status=status.HTTP_200_OK,
-                data=serialized.data
-            )
-
-class DetalleLibro(APIView):
-    def get(self, request, id):
-        try:
-            libro = Libro.objects.get(id=id)
-
-        except Libro.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        serialized = LibroSerializer(libro)
-        return Response(
-            status=status.HTTP_200_OK,
-            data=serialized.data
-        )
-
-
-    def put(self, request, id):
-        try:
-            libro = Libro.objects.get(id=id)
-
-        except Libro.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        serialized = LibroSerializer(libro, data=request.data)
-
-        if serialized.is_valid():
-            serialized.save()
-            return Response(
-                status=status.HTTP_200_OK,
-                data=serialized.data
-            )
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    def patch(self, request, id):
-        try:
-            libro = Libro.objects.get(id=id)
-        except Libro.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        serialized = LibroSerializer(
-            libro,
-            data=request.data,
-            partial=True
-        )
-
-        if serialized.is_valid():
-            serialized.save()
-            return Response(
-                status=status.HTTP_200_OK,
-                data=serialized.data
-            )
-
-    def delete(self, request, id):
-        try:
-            libro = Libro.objects.get(id=id)
-
-        except Libro.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        eliminar = libro.delete()
-
-        if eliminar:
-            return Response(status=status.HTTP_204_NO_CONTENT)
-
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-"""
-
-class LibroGenericViews(generics.ListAPIView):
-    queryset = Libro.objects.all()
-    serializer_class = LibroSerializer
-
-"""    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return NuevoLibroSerializer
-        return LibroSerializer"""
-
-
-class LibroDetailGenericViews(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Libro.objects.all()
-    serializer_class = LibroSerializer
+from libros.serializers import LibroSerializer
 
 
 class LibroViewSet(ModelViewSet):
@@ -138,10 +32,6 @@ class LibroViewSet(ModelViewSet):
         #if nombre:
         #    filtro = self.queryset.filter(nombre__icontains=nombre)
         #    return filtro
-
-
-
-
 
     #Método para expandir toda la información si tiene tablas relacionadas
     #def get_serializer_class(self):
@@ -193,29 +83,10 @@ class LibroViewSet(ModelViewSet):
         )
 """
 
-
-
-
-
-
-
 """            if eliminar:
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)"""
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

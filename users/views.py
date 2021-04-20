@@ -11,13 +11,12 @@ class UserViewSet(ModelViewSet):
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
-
             return CreateUserSerializer
+
         return UserSerializer
 
     def get_permissions(self):
         if self.request.method == 'POST':
             self.permission_classes = (AllowAny, )
-            #return [p() for p in (AllowAny, )]
 
         return super(UserViewSet, self).get_permissions()

@@ -27,12 +27,11 @@ class CreateUserSerializer(ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
-        """        send_mail(
+        send_mail(
             'Asunto',
             'Cuerpo',
             'hola@gmail.com',
             [validated_data['email']],
             fail_silently=False,
-        )"""
+        )
         return user
-
