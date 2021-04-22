@@ -16,7 +16,7 @@ class LibroViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
 
 
-    def get_queryset(self):
+"""    def get_queryset(self):
         data = {}
         #Libro._meta.get_fields()
         for key, value in self.request.query_params.items():
@@ -25,7 +25,7 @@ class LibroViewSet(ModelViewSet):
                 continue
             data[key + '__icontains'] = value
         print(data)
-        return self.queryset.filter(**data)
+        return self.queryset.filter(**data)"""
 
 
         #nombre = self.request.query_params.get('nombre')
@@ -40,14 +40,14 @@ class LibroViewSet(ModelViewSet):
     #    return LibroSerializer
 
     #Método para ver que estamos haciendo
-    def get_serializer_class(self, *args, **kwargs):
+    #def get_serializer_class(self, *args, **kwargs):
         #if self.action == 'retrieve':
         #    return NuevoLibroSerializer()
-        print(self.action)
-        return super().get_serializer_class()
+    #    print(self.action)
+    #    return super().get_serializer_class()
 
     #Acciones
-    @action(methods=['GET', 'POST', 'DELETE'], detail=True)
+"""    @action(methods=['GET', 'POST', 'DELETE'], detail=True)
     def autores(self, request, pk=None):
         libro = self.get_object()
 
@@ -71,7 +71,7 @@ class LibroViewSet(ModelViewSet):
             for id_autor in id_autores:
                 autor = Autor.objects.get(id=id_autor)
                 libro.autores.remove(autor)
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)"""
 
 """    @action(methods=['GET'], detail=False)
     def ordenar(self, request):

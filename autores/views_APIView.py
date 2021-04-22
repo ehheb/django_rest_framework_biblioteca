@@ -18,7 +18,7 @@ class VistaAutor(APIView):
         if serialized.is_valid():
             serialized.save()
             return Response(
-                status=status.HTTP_200_OK,
+                status=status.HTTP_201_CREATED,
                 data=serialized.data
             )
         else:
